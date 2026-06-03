@@ -101,56 +101,6 @@ async def send_message(request: MessageRequest, background_tasks: BackgroundTask
     }
 
 
-# ============================================
-# OPTION 2: Continuous Background Worker Thread
-# ============================================
-
-# Uncomment this section if you want continuous polling
-# instead of per-request background tasks
-
-"""
-import threading
-from azure.servicebus.aio import ServiceBusClient
-from azure.servicebus import ServiceBusMessage
-
-CONNECTION_STR = os.getenv("AZURE_SERVICE_BUS_CONNECTION_STRING")
-QUEUE_NAME = os.getenv("QUEUE_NAME")
-
-
-async def worker_loop():
-    '''Continuously polls Service Bus queue'''
-    print(f"🚀 Worker started - listening on queue: {QUEUE_NAME}")
-    
-    servicebus_client = ServiceBusClient.from_connection_string(CONNECTION_STR)
-    
-    async with servicebus_client:
-        receiver = servicebus_client.get_queue_receiver(queue_name=QUEUE_NAME)
-        
-        async with receiver:
-            async for message in receiver:
-                try:
-                    print(f"📨 Received: {str(message)}")
-                    # Process message here
-                    await receiver.complete_message(message)
-                    print("✅ Processed!")
-                except Exception as e:
-                    print(f"❌ Error: {e}")
-                    await receiver.abandon_message(message)
-
-
-def run_worker():
-    '''Run worker in separate thread'''
-    asyncio.run(worker_loop())
-
-
-@app.on_event("startup")
-async def startup_event():
-    '''Start background worker when FastAPI starts'''
-    worker_thread = threading.Thread(target=run_worker, daemon=True)
-    worker_thread.start()
-    print("✅ Background worker thread started")
-"""
-
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
