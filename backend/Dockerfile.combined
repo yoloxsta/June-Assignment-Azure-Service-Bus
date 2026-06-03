@@ -1,0 +1,17 @@
+# Dockerfile for Combined Service (API + BackgroundTasks)
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy combined application
+COPY main_combined.py .
+
+# Expose port
+EXPOSE 8000
+
+# Run combined service
+CMD ["uvicorn", "main_combined:app", "--host", "0.0.0.0", "--port", "8000"]

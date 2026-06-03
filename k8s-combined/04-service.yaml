@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: servicebus-combined
+spec:
+  type: LoadBalancer  # Or use Ingress for more control
+  selector:
+    app: servicebus-combined
+  ports:
+  - port: 80
+    targetPort: 8000

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicebus-combined
+  labels:
+    app: servicebus-combined
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: servicebus-combined
+  template:
+    metadata:
+      labels:
+        app: servicebus-combined
+    spec:
+      containers:
+      - name: api
+        image: your-registry.azurecr.io/servicebus-combined:latest  # Change to your ACR
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: servicebus-config
+        - secretRef:
+            name: servicebus-secret
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5

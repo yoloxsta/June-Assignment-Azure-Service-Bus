@@ -231,6 +231,74 @@ az aks delete --resource-group June-RG --name servicebus-aks
 
 ## Common Questions
 
+### Q: Can I combine API and Worker in one service?
+
+**A: Yes! Two ways:**
+
+#### Option 1: FastAPI BackgroundTasks (Simple)
+```python
+@app.post("/api/send")
+async def send_message(request: MessageRequest, background_tasks: BackgroundTasks):
+    # Process AFTER returning response
+    background_tasks.add_task(process_message, request.content)
+    return {"success": True}  # User gets immediate response
+```
+
+**Pros:**
+- Simple, no extra infrastructure
+- Good for light processing
+
+**Cons:**
+- Only runs when API receives requests
+- If pod dies, queued tasks are lost
+- Can't scale worker independently
+
+#### Option 2: Background Thread with Service Bus (Better)
+```python
+@app.on_event("startup")
+async def startup_event():
+    # Start worker thread when API starts
+    worker_thread = threading.Thread(target=run_worker, daemon=True)
+    worker_thread.start()
+```
+
+**Pros:**
+- Continuous polling like separate worker
+- One deployment to manage
+- Messages survive pod restart (stored in Service Bus)
+
+**Cons:**
+- Can't scale API and Worker independently
+- Resource contention
+
+#### Comparison Table
+
+| Feature | Separate Deployments | Combined Service |
+|---------|---------------------|------------------|
+| Scale API independently | ✅ Yes | ❌ No |
+| Scale Worker independently | ✅ Yes | ❌ No |
+| Simplicity | ❌ 2 deployments | ✅ 1 deployment |
+| Resource isolation | ✅ Separate | ❌ Shared |
+| **Recommended for** | **Production** | **Simple apps** |
+
+#### When to Use What?
+
+```
+Use SEPARATE deployments when:
+✅ High traffic (need to scale API vs Worker differently)
+✅ Heavy processing (don't want to slow down API)
+✅ Production workloads
+
+Use COMBINED service when:
+✅ Low traffic
+✅ Simple prototype/MVP
+✅ Want simpler deployment
+```
+
+See `backend/main_combined.py` for the combined code example.
+
+---
+
 ### Q: How does Worker know when to process?
 
 **A: Worker continuously polls the queue.** It asks Service Bus "any new messages?" every second. When a message arrives, it's picked up immediately.
