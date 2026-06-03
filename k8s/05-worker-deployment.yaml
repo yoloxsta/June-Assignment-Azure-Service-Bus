@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicebus-worker
+  labels:
+    app: servicebus-worker
+spec:
+  replicas: 2  # Scale based on message volume
+  selector:
+    matchLabels:
+      app: servicebus-worker
+  template:
+    metadata:
+      labels:
+        app: servicebus-worker
+    spec:
+      containers:
+      - name: worker
+        image: your-registry.azurecr.io/servicebus-worker:latest  # Change to your ACR
+        envFrom:
+        - configMapRef:
+            name: servicebus-config
+        - secretRef:
+            name: servicebus-secret
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      # No ports needed - worker doesn't receive HTTP traffic
+      # No probes needed - worker just polls Service Bus

@@ -14,6 +14,7 @@ env/
 
 # Environment variables (IMPORTANT: contains secrets!)
 .env
+*.env.local
 
 # IDE
 .vscode/
@@ -31,3 +32,7 @@ npm-debug.log*
 
 # Build outputs
 frontend/dist/
+
+# Kubernetes secrets with real credentials
+# (use template files like *-secret.yaml.example instead)
+k8s/*-secret-prod.yaml
