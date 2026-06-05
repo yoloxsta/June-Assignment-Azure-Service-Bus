@@ -47,7 +47,6 @@ QUEUE_NAME=your-queue-name
 cd backend
 pip install -r requirements.txt
 ```
-
 **Frontend:**
 ```bash
 cd frontend
