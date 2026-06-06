@@ -86,7 +86,7 @@ Message ID: 1d538cf3-cdba-4f21-b019-4521ea5f8b67
 Content: hello
 Priority: normal
 Source: react_frontend
-⚙️  Processing generic message...
+ Processing generic message...
    ✅ Processed!
 ==================================================
 ```
