@@ -142,7 +142,6 @@ Make sure backend is running on port 8000
 This is normal! The worker processes messages immediately. Stop the worker to see messages accumulate.
 
 ---
-
 ## Project Structure
 
 ```
