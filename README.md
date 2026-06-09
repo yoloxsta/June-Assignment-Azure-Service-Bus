@@ -52,7 +52,6 @@ pip install -r requirements.txt
 cd frontend
 npm install
 ```
-
 ### Step 3: Run the Application
 
 Open **3 separate terminals**:
