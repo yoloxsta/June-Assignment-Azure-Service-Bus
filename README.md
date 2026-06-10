@@ -89,7 +89,6 @@ Source: react_frontend
    ✅ Processed!
 ==================================================
 ```
-
 ### Check Azure Portal
 - Go to Azure Portal → Service Bus → Queue
 - **Message count shows 0** because worker processes messages instantly
