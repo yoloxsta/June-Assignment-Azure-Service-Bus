@@ -124,7 +124,6 @@ Try these message prefixes to see different processing:
 | POST | `/api/send` | Send message to queue |
 
 ---
-
 ## Troubleshooting
 
 ### "uvicorn not recognized"
