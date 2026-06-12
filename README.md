@@ -67,7 +67,6 @@ Open **3 separate terminals**:
 Go to: **http://localhost:5173**
 
 ---
-
 ## How to Test
 
 ### Send a Message
