@@ -139,7 +139,6 @@ This is normal! The worker processes messages immediately. Stop the worker to se
 
 ---
 ## Project Structure
-
 ```
 azure_service_bus_lab/
 ├── backend/
