@@ -24,7 +24,6 @@ Learn how to use Azure Service Bus queues with Python and React.
 4. Background worker picks up message and processes it
 
 ---
-
 ## Quick Start Guide
 
 ### Prerequisites
