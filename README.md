@@ -38,7 +38,6 @@ Edit `.env` file with your Azure credentials:
 AZURE_SERVICE_BUS_CONNECTION_STRING=Endpoint=sb://your-namespace.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=YOUR_KEY
 QUEUE_NAME=your-queue-name
 ```
-
 ### Step 2: Install Dependencies
 
 **Backend:**
