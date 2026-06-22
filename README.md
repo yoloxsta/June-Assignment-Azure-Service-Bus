@@ -63,7 +63,6 @@ Open **3 separate terminals**:
 ### Step 4: Open in Browser
 
 Go to: **http://localhost:5173**
-
 ---
 ## How to Test
 
