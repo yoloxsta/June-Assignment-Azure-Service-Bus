@@ -118,7 +118,6 @@ Try these message prefixes to see different processing:
 | GET | `/` | API status |
 | GET | `/api/status` | Check Service Bus connection |
 | POST | `/api/send` | Send message to queue |
-
 ---
 ## Troubleshooting
 
